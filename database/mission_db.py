@@ -205,17 +205,3 @@ class MissionDB:
         cursor.close()
         conn.close()
         return agent
-    
-
-print(MissionDB.get_all_missions())
-# print(MissionDB.create_mission({
-#     "title":"clean",
-#     "description":"have to clean",
-#     "location":"kitchen",
-#     "difficulty":4,
-#     "importance":3,
-#     "status":"NEW",
-#     "assigned_agent_id":None
-# }))
-print(MissionDB.count_critical_missions())
-print(MissionDB.get_all_missions())
