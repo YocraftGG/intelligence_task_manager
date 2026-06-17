@@ -21,8 +21,6 @@ class DB_connection:
 
         cursor.close()
         conn.close()
-
-
     
 
     def create_tables():
