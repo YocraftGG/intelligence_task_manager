@@ -31,8 +31,8 @@ id | INT, AUTO_INCREMENT, PK | Unique identifier
 title | VARCHAR | Mission title
 description | TEXT | Detailed description
 location | VARCHAR | Location
-difficulty | INT | 1-0 only
-importance | INT | 1-0 only
+difficulty | INT | 1-10 only
+importance | INT | 1-10 only
 status | VARCHAR | Default: NEW
 risk_level | VARCHAR | Automatically calculated — not provided by user
 assigned_agent_id | INT | NULL until assigned
