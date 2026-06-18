@@ -203,10 +203,11 @@ class MissionDB:
 
         cursor.execute(
             """
-            SELECT COUNT(*) FROM Intelligence_db.missions
-            WHERE status = COMPLETED
-            GROUP BY assigned_agent_id
-            ORDER BY DESC
+            SELECT assigned_agent_id AS agent_id, COUNT(*) AS count 
+            FROM Intelligence_db.missions 
+            WHERE status = 'COMPLETED'
+            GROUP BY assigned_agent_id 
+            ORDER BY count DESC 
             LIMIT 1
             """
         )
