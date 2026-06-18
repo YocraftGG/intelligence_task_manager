@@ -1,7 +1,8 @@
-from db_connection import DB_connection
+from database.db_connection import DB_connection
 
 
 class AgentDB:
+    @staticmethod
     def create_agent(data):
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -14,9 +15,9 @@ class AgentDB:
         values = (
             data["name"], 
             data["specialty"], 
-            data["is_active"], 
-            data["completed_missions"], 
-            data["failed_missions"], 
+            data.get("is_active", True), 
+            data.get("completed_missions", 0), 
+            data.get("failed_missions", 0), 
             data["agent_rank"]
         )
 
@@ -27,6 +28,7 @@ class AgentDB:
         return AgentDB.get_agent_by_id(new_id)
     
 
+    @staticmethod
     def get_all_agents():
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -39,6 +41,7 @@ class AgentDB:
         return rows
 
 
+    @staticmethod
     def get_agent_by_id(id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -51,6 +54,7 @@ class AgentDB:
         return row
 
 
+    @staticmethod
     def update_agent(id, data):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -70,6 +74,7 @@ class AgentDB:
         return updated
     
 
+    @staticmethod
     def deactivate_agent(id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -89,6 +94,7 @@ class AgentDB:
         return deactivated
     
 
+    @staticmethod
     def increment_completed(id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -108,6 +114,7 @@ class AgentDB:
         return incremented
     
 
+    @staticmethod
     def increment_failed(id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -127,6 +134,7 @@ class AgentDB:
         return incremented
     
 
+    @staticmethod
     def get_agent_performance(id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -155,6 +163,7 @@ class AgentDB:
             }
     
 
+    @staticmethod
     def count_active_agents():
         conn = DB_connection.get_connection()
         cursor = conn.cursor()

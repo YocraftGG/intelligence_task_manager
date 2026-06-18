@@ -1,6 +1,7 @@
 import mysql.connector
 
 class DB_connection:
+    @staticmethod
     def get_connection():
         """Returns an active MySQL connection"""
         return mysql.connector.connect(
@@ -11,6 +12,7 @@ class DB_connection:
         )
 
 
+    @staticmethod
     def create_database():
         """Creates Intelligence_db if it does not exist"""
         conn = DB_connection.get_connection()
@@ -23,6 +25,7 @@ class DB_connection:
         conn.close()
     
 
+    @staticmethod
     def create_tables():
         conn = DB_connection.get_connection()
         cursor = conn.cursor()

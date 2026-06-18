@@ -1,8 +1,9 @@
-from db_connection import DB_connection
-from agent_db import AgentDB
+from database.db_connection import DB_connection
+from database.agent_db import AgentDB
 
 
 class MissionDB:
+    @staticmethod
     def get_risk_level(data):
         risk_level = data["difficulty"] * 2 + data["importance"]
 
@@ -12,6 +13,7 @@ class MissionDB:
         else: return "CRITICAL"
 
 
+    @staticmethod
     def create_mission(data):
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -21,8 +23,8 @@ class MissionDB:
         sql = """
             INSERT INTO Intelligence_db.missions 
             (title, description, location, difficulty, 
-            importance, status, risk_level, assigned_agent_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            importance, status, risk_level)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
         values = (
             data["title"], 
@@ -30,9 +32,8 @@ class MissionDB:
             data["location"], 
             data["difficulty"], 
             data["importance"], 
-            data["status"],
-            risk_level,
-            data["assigned_agent_id"]
+            data.get("status", "NEW"),
+            risk_level
         )
 
         cursor.execute(sql, values)
@@ -42,6 +43,7 @@ class MissionDB:
         return MissionDB.get_mission_by_id(new_id)
     
 
+    @staticmethod
     def get_all_missions():
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -54,6 +56,7 @@ class MissionDB:
         return rows
 
 
+    @staticmethod
     def get_mission_by_id(id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -66,6 +69,7 @@ class MissionDB:
         return row
     
 
+    @staticmethod
     def assign_mission(m_id, a_id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -86,6 +90,7 @@ class MissionDB:
         return assigned
     
 
+    @staticmethod
     def update_mission_status(id, status):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -105,6 +110,7 @@ class MissionDB:
         return assigned
 
 
+    @staticmethod
     def get_open_missions_by_agent(id):
         conn = DB_connection.get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -123,6 +129,7 @@ class MissionDB:
         return rows
     
 
+    @staticmethod
     def count_all_missions():
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -135,6 +142,7 @@ class MissionDB:
         return count
     
 
+    @staticmethod
     def count_by_status(status):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -152,6 +160,7 @@ class MissionDB:
         return count
     
 
+    @staticmethod
     def count_open_missions():
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -169,6 +178,7 @@ class MissionDB:
         return count
     
 
+    @staticmethod
     def count_critical_missions():
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
@@ -186,6 +196,7 @@ class MissionDB:
         return count
 
 
+    @staticmethod
     def get_top_agent():
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
