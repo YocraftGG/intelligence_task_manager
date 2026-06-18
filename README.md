@@ -91,10 +91,72 @@ Number | Rule
 9 | Only a task can be finished. IN_PROGRESS and changed to status failed or completed
 10 | Only a task can be canceled in status NEW or ASSIGNED — otherwise an error.
 
+## Endpoints
+### Agents
+Method | Endpoint | Description
+--- | --- | ---
+[POST] | /agents | Create new agent
+[GET] | /agents | All agents
+[GET] | /agents/{id} | Agent by ID
+[PUT] | /agents/{id} | Update agent
+[PUT] | /agents/{id}/deactivate | Deactivate agent
+[GET] | /agents/{id}/performance | Agent performance
+
+### Missions
+Method | Endpoint | Description
+--- | --- | ---
+[POST] | /missions | Create mission
+[GET] | /missions | All missions
+[GET] | /missions/{id} | Mission by ID
+[PUT] | /missions/{id}/assign/{agent_id}| Assign to agent
+[PUT] | /missions/{id}/start | Start mission
+[PUT] | /missions/{id}/complete | Successfully completed
+[PUT] | /missions/{id}/fail | Failed to complete
+[PUT] | /missions/{id}/cancel | Cancel mission
+
+### Reports
+Method | Endpoint | Description
+--- | --- | ---
+[GET] | /reports/summary | System Summary Report
+[GET] | /reports/missions-by-status | Missions by Status
+[GET] | /reports/top-agent | The Outstanding Agent
+
+## System Flow
+### Agent Creation
+User enters name, specialty and rank in the endpoint, -> The server checks if the data is correct -> The system creates a new agent in the database -> Returns a success message
+
+### Task Creation
+User enters title, description, difficulty location and importance in the endpoint, -> The server checks if the data is correct -> The system creates a new task in the database -> Returns a success message
+
+### Task Association
+User enters task and agent ID in the endpoint, -> The server checks if the task exists, if the agent exists, etc.. -> The system creates and associates the task in the database -> Returns a success message
+
 ## Run instructions
 ### Running Docker
 ```bash
 docker run -d --name intelligence-mysql -e MYSQL_ROOT_PASSWORD=1234 \
 -e MYSQL_DATABASE=Intelligence_db -p 3306:3306 mysql:8.0
+```
 
+### Creating venv
+```bash
+python -m venv venv
+```
+```bash
+venv\Scripts\activate
+```
+
+### Installing requirements
+```bash
+pip install requirements.txt
+```
+
+### Running FastAPI
+```bash
+python main.py
+```
+
+### Logging into Swagger
+```
+http://127.0.0.1:8000/docs
 ```
