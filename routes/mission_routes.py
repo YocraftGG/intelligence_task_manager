@@ -36,7 +36,7 @@ def create_mission(body: dict):
         validate(field not in body, 400, f"Field '{field}' is required")
 
     for field in ("difficulty", "importance"):
-        validate(body[field] < 1 or 10 < body[field], 404, f"'{field}' must be between 1 and 10")
+        validate(body[field] < 1 or 10 < body[field], 400, f"'{field}' must be between 1 and 10")
 
     logger.info("Creating mission")
     mission = mission_db.create_mission(body)
