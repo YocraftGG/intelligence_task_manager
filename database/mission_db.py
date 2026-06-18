@@ -94,6 +94,12 @@ class MissionDB:
     def update_mission_status(id, status):
         conn = DB_connection.get_connection()
         cursor = conn.cursor()
+
+        if status == "COMPLETED":
+            AgentDB.increment_completed()
+
+        if status == "FAILED":
+            AgentDB.increment_failed()
         
         cursor.execute(
             """
